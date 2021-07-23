@@ -15,6 +15,7 @@ Deployed with Vercel but still in development for new features
 - Framer Motion Animations for transitions
 - Minifying and Optimizing for quicker load times
 - Spinners and Loaders for async features
+- Persisting user data with firestore DB
 
 ## Clone
 ```
