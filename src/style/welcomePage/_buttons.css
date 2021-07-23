@@ -1,0 +1,16 @@
+.WelcomePage_form--btn {
+  text-align: center;
+  background-color: #f7f1e3;
+  color: black;
+  border: 1px solid #1A2C19;
+  border-radius: 6px;
+  height: 41%;
+  width: 22%;
+  margin-top: 10px;
+  font-family: monospace;
+  }
+
+  .WelcomePage_form--btn:focus{
+    border-bottom: 4px solid gold;
+    background-color: white;
+  }

@@ -1,37 +1,43 @@
 import React from "react"
 import {Link} from 'react-router-dom';
-import '../index.css';
-import '../style components/WelcomePage.css';
-import sideImage from '../Assets/julius-drost-nsrSyI-JUYg-unsplash.jpg';
+import '../style/welcomePage/index.css'
+import sideImage from '../helpers/images/jonathan-marchal-7Vs5LY_rbKk-unsplash.jpg';
 
 
 
 
-
-function WelcomePage({setName}) {
+function WelcomePage({setName, name}) {
      
    
 
     return (
-        <div className="wrapper">
+        
+        <div className="WelcomePage">
+        
+        <div className ='WelcomePage_content'>
+         <div className ="WelcomePage_image">
+            <img alt='' src={sideImage} className="WelcomePage_image--img"/>
+        </div>
 
-        <form className="container__main" onSubmit={e=>{e.preventDefault()}}>
-        <div className="container__main__object">
-            <h2 className="welcome">Welcome to your dashboard</h2>
+        <form className="WelcomePage_form" onSubmit = {e=>{e.preventDefault()}}>
+        <div className="WelcomePage_form--section">
+            <h2 className="WelcomePage_form--header"> Fluxara </h2>
+            <p class="WelcomePage_text--3"> Your Curated News Feed with Stuff That Actually Matters...</p>
 
-            <p className="text">What's your name? </p>
+            <p className="WelcomePage_form--text">Tell us your name! </p>
             
-            <input type="text" className="mainInput" onChange={e=>setName(e.target.value)} />
+            <input type="text" required = 'true' className="WelcomePage_form--input" onChange = {e=> setName(e.target.value)} />
           
+            { name ? <Link to="/pages/UserChoice.js" className="WelcomePage_form--btn"> {"Next >"}</Link> :
+              <div className='WelcomePage_dots'> ......... </div>    
+            }
+            
 
-            <Link to="/pages/UserChoice.js" className="link"> {"next >"}</Link>
         </div>
             
 
         </form>
 
-        <div className="container__secondary">
-            <img alt='' src={sideImage} className="container__Image"/>
         </div>
            
         </div>

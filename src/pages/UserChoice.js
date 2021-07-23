@@ -1,79 +1,88 @@
-import React,{useState} from 'react';
-import sideImage from '../Assets/julius-drost-nsrSyI-JUYg-unsplash.jpg';
-import '../index.css';
-import '../style components/UserChoice.css';
-import { Link } from 'react-router-dom';
+/* eslint-disable */
+
+import React, { useState, useEffect } from "react";
+import '../style/userchoicesPage/index.css';
+import sideImage from "../helpers/images/jonathan-marchal-7Vs5LY_rbKk-unsplash.jpg";
+import { Link } from "react-router-dom";
+
+function UserChoice({ name, userOptions, setUserOptions, triggerApi }) {
+  const [toggle, setToggle] = useState(false);
 
 
 
-function UserChoice({name, userOptions, setUserOptions}) { 
-
-    const[count, setCount]= useState(0)
-
-
-// store only 5 characters
-
-const buttonColors = ["lightgreen", "lightcoral", "lightblue", "violet","cyan"]
-
-
-const colorChange = (button)=> {
-    button.style.backgroundColor = buttonColors[count];
-    setCount(p => p + 1)
-}
-
-
-const clickHandler = (option, e , index) => {
-    if(userOptions.length <= 5) {
-        setUserOptions(prevState => prevState.concat(option))
-        console.log(userOptions)
+  const clickHandler = (option, button, index) => {
+    if (userOptions.includes(option)) {
+      setToggle(false);
+      button.style.backgroundColor = "#8C8C8C";
+      let index = userOptions.indexOf(option);
+      userOptions.splice(index, 1);
+    } else if (!userOptions.includes(option) && userOptions.length < 5) {
+      setToggle(true);
+      button.style.backgroundColor = "black";
+      setUserOptions((prevState) => prevState.concat(option));
     }
-    
- }
+    console.log(userOptions);
+  };
 
-const options=["tech","culture","sex","sports","opinion","business","food","health","space"]
+  useEffect(() => { 
+    //  console.log(userOptions)
+  });
 
+  const options = [
+    "tech",
+    "culture",
+    "sex",
+    "sports",
+    "opinion",
+    "business",
+    "food",
+    "health",
+    "space",
+  ];
 
-const buttonList = options.map((element,index) => {
-    // returns two handleClick methods
-    
-    
-    return <button key = {element} disabled={userOptions.includes(element)} onClick={(e)=>{
-        clickHandler(element)
-        //here
-        colorChange(e.target)
-        
-    }} 
-    className={`btn-main ${element}`}> {element} </button>
-})
+  const buttonList = options.map((element, index) => {
+    return (
+      <button
+        key={element}
+        onClick={(e) => {
+          clickHandler(element, e.target);
+        }}
+        className={`btn-main ${element}`}
+      >
+        {" "}
+        {element}{" "}
+      </button>
+    );
+  });
 
+  return (
+    <div className ="userChoice">
+      <div className ="userChoice_content">
 
-    return ( 
-        <div className="wrapper">
+      <div className ="userChoice_image">
+        <img alt = "" src = {sideImage} className= "userChoice_image--img" />
+      </div>
 
-        <div className="container__main">
-            <div className="container__main_inner">
-            
-            
-                <h2 className="welcome">Welcome to your dashboard {name}! </h2>
-                <p className="text"> Select Five topics for your newsfeed 
-                    {/* <img className='emoji' alt='' src={emojiFace} /> */}
-                </p>
-                
-                
-                <div className="buttonList">
-                    {buttonList}
-                </div>
+        <div className ="userChoice_form">
 
-                <Link to="/pages/AllSet.js" className="link"> next > </Link>
-            </div>
+          <h2 className ="userChoice_form--text">Welcome to your dashboard {name}! </h2>
+          <p className ="userChoice_text--3">
+            {" "}
+            Personalize your news feed!
+          </p>
+
+          <div className = "userChoice_buttonList">{buttonList}</div>
+
+          {userOptions.length === 5 ? <Link to="/pages/AllSet.js" className="userChoice_form--nextbtn" onClick={triggerApi}>
+            {" "}
+            next ▶ {" "}
+          </Link> : <div> Pick 5 News Choices! </div>}
+
         </div>
-        <div className="container__secondary">
-            <img alt='' src={sideImage} className="container__Image"/>
-        </div>
-
+      </div>
+      
     </div>
-    )
+  );
 }
 
-export default UserChoice
-
+export default UserChoice;

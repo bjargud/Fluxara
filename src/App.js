@@ -1,81 +1,51 @@
-import React, { useState} from 'react';
-import { Switch,  Route, Link } from "react-router-dom";
-import axios from 'axios';
-import UserChoice from './pages/UserChoice';
-import WelcomePage from './pages/WelcomePage';
-import AllSet from './pages/AllSet';
-import DashBoard from './pages/DashBoard';
-import { useEffect } from 'react';
-import GlobalContext from './context/Context';
-import DateUpdate from './Adapters/DateUpdate';
-
-
-
-
+/* eslint-disable */
+import React, { useState, useEffect } from "react";
+import GlobalContext from "./context/Context";
+import { newsHandler } from "./features/NewsAPI";
+import { locationHandler } from "./features/Geolocation";
+import Router from "./features/Router";
+import './main.css';
 
 const App = () => {
-  
+  const [country, setCountry] = useState("");
+  const [location, setLocation] = useState("");
+  const [name, setName] = useState(null);
+  const [news, setNews] = useState([]);
 
-const [name, setName] = useState('')
+  const [userOptions, setUserOptions] = useState([]);
 
-const [userOptions, setUserOptions] = useState([]) 
+  useEffect(() => {
+    localStorage.setItem("user-choices", JSON.stringify(userOptions));
+    locationHandler(setLocation, setCountry);
+  });
 
-
-
-const newsHandler = (id) => {
-  const url = '' 
-  //`http://newsapi.org/v2/everything?q=${id}&from=${DateUpdate()}&sortBy=popularityAt&apiKey=2085a55016ef4a84a3777e09204d759e`
-  
-  axios.get(url)
-  .then(data => {
-    // console.log(data)
-  })
-  
- 
-}
-
-
-useEffect(() => {
-  
-  // userOptions.forEach(val => {
-  //   newsHandler(val)
-    
-  // })
-
- 
-})
+  const triggerApi = () => {
+    let newsUpdated = [...news]
+    userOptions.forEach((val) => {
+      newsHandler(val).then((res) => {
+        const newsUpdate = { topic: val, articles: res.data.articles }
+        newsUpdated = [...newsUpdated, newsUpdate]
+        setNews(newsUpdated)
+      })
+    });
+  };
 
   return (
+    <div className ='App'>
+      <GlobalContext.Provider value={news}>
+        <Router 
+        name={name}
+        setName={setName}
+        triggerApi = {triggerApi}
+        userOptions={userOptions}
+        setUserOptions={setUserOptions}
+        news={news}
+        country={country}
+        location={location}
+        />
+      </GlobalContext.Provider>
+    </div>
+  );
+};
 
-  
-          <div>
-<GlobalContext.Provider value = ''>
-    <Switch>
-      <Route exact path='/'>
-        <WelcomePage setName = {setName}/>
-      </Route>
-      <Route path='/pages/UserChoice.js'>
-          <UserChoice name = {name}  userOptions= {userOptions} setUserOptions = {setUserOptions}/>
-      </Route>
-      <Route path='/pages/AllSet.js'>
-          <AllSet/>
-      </Route>
-      <Route path='/pages/DashBoard.js'>
-          <DashBoard name= {name} userOptions = {userOptions}/>
-      </Route>
-    </Switch>
-</GlobalContext.Provider>        
-        
-        <Link to='/'> Welcome Page</Link>
-        <Link to='/pages/UserChoice.js'> User Choice</Link>
-        <Link to='/pages/AllSet.js'> All Set! </Link>
-        <Link to='/pages/DashBoard.js'> DashBoard </Link>
-        
-    
-        </div>
-  
-  )
-}
-
-
-export default App
+export default App;

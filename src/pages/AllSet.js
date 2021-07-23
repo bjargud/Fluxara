@@ -1,14 +1,31 @@
-import React from 'react';
-import '../style components/AllSet.css';
-import '../index.css';
+import React, {useEffect, useContext} from 'react';
+import '../style/readyPage/index.css';
 import { Link } from 'react-router-dom';
+import '../style/readyPage/index.css';
+import GlobalContext from './../context/Context';
+
+
+
 
 function AllSet() {
+
+    const news = useContext(GlobalContext)
+
+   
+    useEffect(()=> {
+        localStorage.setItem('news', JSON.stringify(news))
+    })
+
     return (
-        <div className="wrapper">
-        <div className="container__main">
-            <h2 className="welcomeMessage">You are all set!</h2>
-            <Link className="textMessage" to="/pages/DashBoard.js"> Take me to my dashboard > </Link>
+
+    <div className ="readyPage">
+        <div className ="readyPage_content">
+
+            <h2 className ="readyPage_content--ready">
+          
+                    Great! You are all set!</h2>
+            <Link className = "readyPage_content--next" to ="/pages/DashBoard.js"> Take me to my dashboard ▶ </Link>
+
         </div>
 
     </div>
