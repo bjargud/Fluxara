@@ -2,6 +2,11 @@
 
 Fluxara is a dashboard app based on the Create React App boilerplate for accessing a personalized and curated news feed
 
+## Live Version
+```
+link coming...
+```
+
 ## Status
 
 Deployed with Vercel but still in development for new features
@@ -11,7 +16,13 @@ Deployed with Vercel but still in development for new features
 - Minifying and Optimizing for quicker load times
 - Spinners and Loaders for async features
 
-## Installation
+## Clone
+```
+clone with command "git clone https://github.com/Geller99/Fluxara.git"
+
+```
+
+## Usage
 
 run in command line with
 
@@ -24,7 +35,7 @@ npm start
 ```python
 Responsive CSS -- BEM naming Architecture
 
-React Router
+React Router + Framer Motion
 
 React Testing Library
 
